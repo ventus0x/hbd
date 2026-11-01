@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Birthday Gift — For Roshni</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#0f172a;color:#1e1b4b;overflow-x:hidden}
+  .hidden{display:none!important}
+  /* Lock screen */
+  #lock{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:#0f172a}
+  #lock h1{color:#fff;font-size:clamp(2rem,6vw,3.5rem);margin:0 0 8px;text-align:center}
+  #lock h1 span{color:#ef4444}
+  #lock p{color:#cbd5e1;text-align:center;margin:0 0 24px}
+  .card{display:flex;flex-wrap:wrap;width:min(920px,100%);border-radius:24px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.45);background:#fff}
+  .card-left{flex:1 1 320px;min-height:320px;background:#fef3c7;background-image:repeating-linear-gradient(90deg,transparent,transparent 22px,rgba(0,0,0,.04) 23px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center}
+  .cake-art{font-size:96px;line-height:1}
+  .card-left h2{margin:12px 0 4px;font-size:1.6rem}
+  .card-left p{color:#92400e;margin:0}
+  .card-right{flex:1 1 320px;background:#8b5cf6;color:#fff;padding:32px;display:flex;flex-direction:column;align-items:center}
+  .card-right h3{margin:0 0 6px;font-size:1.4rem}
+  .card-right small{opacity:.9}
+  .dots{display:flex;gap:12px;margin:22px 0}
+  .dot{width:34px;height:34px;border:2px solid rgba(255,255,255,.6);border-radius:10px;display:grid;place-items:center;font-size:20px;background:rgba(255,255,255,.15)}
+  .dot.filled{background:#fff;color:#7c3aed}
+  .keypad{display:grid;grid-template-columns:repeat(3,72px);gap:10px}
+  .keypad button{width:72px;height:56px;border:0;border-radius:999px;background:#fff;color:#7c3aed;font-size:20px;font-weight:700;cursor:pointer}
+  .keypad button:active{transform:scale(.96)}
+  #lockMsg{min-height:22px;margin-top:14px;color:#fecaca;font-weight:600}
+  .shake{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .prompt-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;background:repeating-linear-gradient(90deg,#fdf2f8,#fdf2f8 22px,#fce7f3 23px)}
+  .prompt-screen h1{font-size:clamp(1.8rem,6vw,3rem);color:#be185d;margin:8px 0}
+  .prompt-screen p{color:#475569;font-size:1.1rem}
+  .prompt-screen .big{font-size:80px}
+  .btn-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+  .btn-yes{background:#ef4444;color:#fff;border:0;padding:14px 30px;border-radius:999px;font-size:18px;font-weight:800;cursor:pointer}
+  .btn-no{background:#fff;color:#ef4444;border:2px solid #ef4444;padding:14px 30px;border-radius:999px;font-size:18px;font-weight:800;cursor:pointer}
+  #noMsg{min-height:22px;color:#be185d;font-weight:600;margin-top:12px}
+  .gifts{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+  .gift{width:140px;height:140px;border:0;border-radius:20px;background:#ef4444;color:#fff;font-size:64px;cursor:pointer;box-shadow:0 10px 25px rgba(0,0,0,.2)}
+  .gift.opened{background:#fff;color:#db2777;font-size:28px}
+  .gift small{display:block;font-size:14px;color:#475569;margin-top:6px}
+  /* Birthday */
+  #birthday{background:linear-gradient(180deg,#fff7ed,#fdf2f8);padding-bottom:80px}
+  .hero{text-align:center;padding:56px 20px 20px}
+  .hero h1{font-size:clamp(2.4rem,7vw,4.5rem);color:#db2777;margin:10px 0}
+  .hero p{font-size:1.15rem;color:#475569;max-width:640px;margin:0 auto}
+  .balloons{font-size:44px;letter-spacing:8px}
+  .section{max-width:900px;margin:36px auto;padding:0 20px}
+  .section h2{text-align:center;color:#7c3aed}
+  .cake-wrap{text-align:center;background:#fff;border-radius:24px;padding:32px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+  .cake{font-size:110px;line-height:1}
+  .flames{font-size:28px;letter-spacing:6px}
+  .flames.out{opacity:.25}
+  button.primary{background:#db2777;color:#fff;border:0;padding:13px 22px;border-radius:999px;font-size:16px;font-weight:700;cursor:pointer;margin-top:16px}
+  button.secondary{background:#7c3aed;color:#fff;border:0;padding:11px 18px;border-radius:999px;cursor:pointer}
+  .letter{background:#fff;border-radius:24px;padding:32px;box-shadow:0 10px 30px rgba(0,0,0,.08);line-height:1.7;font-size:1.05rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .reason{background:#fff;border-radius:18px;padding:20px;box-shadow:0 6px 20px rgba(0,0,0,.07);text-align:center}
+  .reason span{font-size:32px}
+  #wishResult{text-align:center;font-weight:700;color:#db2777;min-height:26px;margin-top:14px}
+  footer{text-align:center;color:#94a3b8;padding:24px}
+  canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+
+<!-- INTRO PROMPT -->
+<section id="intro" class="prompt-screen">
+  <div class="big">🎁</div>
+  <h1>I have made something for you, Roshni!</h1>
+  <p>Are you sure? Please say YES! ❤️</p>
+  <div class="btn-row">
+    <button class="btn-yes" id="yesIntro">YES ❤️</button>
+    <button class="btn-no" id="noIntro">NO</button>
+  </div>
+  <div id="noMsg"></div>
+</section>
+
+<!-- LOCK SCREEN -->
+<section id="lock" class="hidden">
+  <h1>Secret <span>Birthday Gift</span></h1>
+  <p>A little surprise, made just for Roshni.</p>
+  <div class="card" id="lockCard">
+    <div class="card-left">
+      <div class="cake-art">🎂</div>
+      <h2>Happy Birthday!</h2>
+      <p>🎈 Something special is waiting inside 🎈</p>
+    </div>
+    <div class="card-right">
+      <h3>Enter a passcode</h3>
+      <small>Enter the 4-digit secret passcode ❤️</small>
+      <div class="dots" id="dots">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <div class="keypad" id="keypad">
+        <button data-digit="1">1</button><button data-digit="2">2</button><button data-digit="3">3</button>
+        <button data-digit="4">4</button><button data-digit="5">5</button><button data-digit="6">6</button>
+        <button data-digit="7">7</button><button data-digit="8">8</button><button data-digit="9">9</button>
+        <button id="del">⌫</button><button data-digit="0">0</button><button id="heart">❤️</button>
+      </div>
+      <div id="lockMsg"></div>
+      <small style="margin-top:8px">Hint: a special date</small>
+    </div>
+  </div>
+</section>
+
+<!-- EXCITED PROMPT -->
+<section id="excited" class="prompt-screen hidden">
+  <div class="big">😊</div>
+  <h1>Are you really excited?</h1>
+  <p>There's no going back now…</p>
+  <div class="btn-row">
+    <button class="btn-yes excited-yes">YES ❤️</button>
+    <button class="btn-yes excited-yes">YES ❤️</button>
+  </div>
+</section>
+
+<!-- MYSTERY GIFTS -->
+<section id="gifts" class="prompt-screen hidden">
+  <div class="big">🎁</div>
+  <h1>Tap on the mystery box to unlock your gifts!</h1>
+  <div class="gifts">
+    <button class="gift" data-gift="💝<small>A big hug, whenever you need it</small>">🎁</button>
+    <button class="gift" data-gift="🌹<small>A promise to always be there</small>">🎁</button>
+    <button class="gift" data-gift="✨<small>All my love, today and always</small>">🎁</button>
+  </div>
+  <button class="primary hidden" id="seeSurpriseBtn" style="margin-top:26px">See your surprise 🎉</button>
+</section>
+
+<!-- BIRTHDAY SURPRISE -->
+<section id="birthday" class="hidden">
+  <div class="hero">
+    <div class="balloons">🎈 🎈 🎈</div>
+    <p>Surprise! You unlocked it!</p>
+    <h1>Happy Birthday, Roshni! 🎉</h1>
+    <p>Today is all about you — your smile, your laugh, and all the little moments that make you so special to me.</p>
+  </div>
+
+  <div class="section">
+    <div class="cake-wrap">
+      <div class="flames" id="flames">🔥 🔥 🔥 🔥 🔥</div>
+      <div class="cake">🎂</div>
+      <h2>Make a wish, Roshni!</h2>
+      <p>Close your eyes, think of something wonderful… then blow out the candles.</p>
+      <button class="primary" id="blowBtn">Blow out the candles 🕯️</button>
+      <button class="secondary hidden" id="relightBtn">Light them again</button>
+      <div id="wishResult"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>💌 A letter for you</h2>
+    <div class="letter">
+      <p>Dear Roshni,</p>
+      <p>Happy birthday! I wanted to make you something a little different this year — not just a message, but a tiny secret world that only you can unlock.</p>
+      <p>Thank you for being you: kind, funny, bright, and endlessly special. I hope this year brings you everything you quietly wish for, and a lot of happy surprises along the way.</p>
+      <p>Here’s to more laughs, more memories, and many more birthdays together.</p>
+      <p><strong>With all my love,<br>Samir ❤️</strong></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Why you’re so special</h2>
+    <div class="grid">
+      <div class="reason"><span>😊</span><h3>Your smile</h3><p>It makes even an ordinary day feel better.</p></div>
+      <div class="reason"><span>😂</span><h3>Your laugh</h3><p>Honestly, my favourite sound in the world.</p></div>
+      <div class="reason"><span>💛</span><h3>Your kindness</h3><p>You care so deeply about the people around you.</p></div>
+      <div class="reason"><span>✨</span><h3>Your energy</h3><p>Everything is more fun when you’re there.</p></div>
+      <div class="reason"><span>🌸</span><h3>Your heart</h3><p>Beautiful, warm, and one of a kind.</p></div>
+      <div class="reason"><span>🎈</span><h3>Just you</h3><p>No reason needed. Simply being Roshni is enough.</p></div>
+    </div>
+  </div>
+
+  <div class="section" style="text-align:center">
+    <h2>One last surprise 🎁</h2>
+    <p>Tap below and let the celebration begin!</p>
+    <button class="primary" id="celebrateBtn">Celebrate! 🎉</button>
+  </div>
+  <footer>Made with ❤️ for Roshni</footer>
+</section>
+
+<script>
+  const PASSCODE = "0721";
+  let entered = "";
+  const dots = document.querySelectorAll(".dot");
+  const lockMsg = document.getElementById("lockMsg");
+  const lockCard = document.getElementById("lockCard");
+
+  function renderDots(){
+    dots.forEach((d,i)=>{
+      d.textContent = i < entered.length ? "•" : "";
+      d.classList.toggle("filled", i < entered.length);
+    });
+  }
+  function wrong(){
+    lockMsg.textContent = "Hmm, that's not it. Try again!";
+    lockCard.classList.remove("shake"); void lockCard.offsetWidth; lockCard.classList.add("shake");
+    entered = ""; renderDots();
+  }
+  function check(){
+    if(entered.length !== 4) return;
+    if(entered === PASSCODE){
+      document.getElementById("lock").classList.add("hidden");
+      document.getElementById("excited").classList.remove("hidden");
+      window.scrollTo(0,0);
+    } else {
+      wrong();
+    }
+  }
+  function addDigit(d){
+    if(entered.length >= 4) return;
+    entered += d; renderDots(); lockMsg.textContent = "";
+    if(entered.length === 4) setTimeout(check, 250);
+  }
+  document.getElementById("keypad").addEventListener("click", (e)=>{
+    const btn = e.target.closest("button");
+    if(!btn) return;
+    if(btn.dataset.digit) addDigit(btn.dataset.digit);
+    if(btn.id === "del") { entered = entered.slice(0,-1); renderDots(); }
+    if(btn.id === "heart") check();
+  });
+  // Intro / excited / gifts flow
+  document.getElementById("yesIntro").addEventListener("click", ()=>{
+    document.getElementById("intro").classList.add("hidden");
+    document.getElementById("lock").classList.remove("hidden");
+    window.scrollTo(0,0);
+  });
+  document.getElementById("noIntro").addEventListener("click", ()=>{
+    document.getElementById("noMsg").textContent = "Nice try! That button is a bit shy — try YES ❤️";
+  });
+  document.querySelectorAll(".excited-yes").forEach(b=>b.addEventListener("click", ()=>{
+    document.getElementById("excited").classList.add("hidden");
+    document.getElementById("gifts").classList.remove("hidden");
+    window.scrollTo(0,0);
+  }));
+  let openedGifts = 0;
+  document.querySelectorAll(".gift").forEach(b=>b.addEventListener("click", ()=>{
+    if(b.classList.contains("opened")) return;
+    b.classList.add("opened");
+    b.innerHTML = b.dataset.gift;
+    openedGifts++;
+    if(openedGifts === 3) document.getElementById("seeSurpriseBtn").classList.remove("hidden");
+  }));
+  document.getElementById("seeSurpriseBtn").addEventListener("click", ()=>{
+    document.getElementById("gifts").classList.add("hidden");
+    document.getElementById("birthday").classList.remove("hidden");
+    window.scrollTo(0,0);
+    celebrate();
+  });
+
+  document.addEventListener("keydown", (e)=>{
+    if(document.getElementById("lock").classList.contains("hidden")) return;
+    if(/^[0-9]$/.test(e.key)) addDigit(e.key);
+    if(e.key === "Backspace") { entered = entered.slice(0,-1); renderDots(); }
+    if(e.key === "Enter") check();
+  });
+
+  // Confetti
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+  resize(); addEventListener("resize", resize);
+  let pieces = [];
+  function celebrate(){
+    const colors = ["#ef4444","#f59e0b","#22c55e","#3b82f6","#a855f7","#ec4899"];
+    for(let i=0;i<180;i++){
+      pieces.push({x: innerWidth/2 + (Math.random()-0.5)*300, y: innerHeight/3, vx:(Math.random()-0.5)*12, vy: Math.random()*-12-3, size: 6+Math.random()*8, color: colors[i%colors.length], rot: Math.random()*360});
+    }
+    let frames = 0;
+    (function anim(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      pieces.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=0.35; p.rot+=5; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180); ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6); ctx.restore(); });
+      pieces = pieces.filter(p=>p.y < innerHeight+30);
+      frames++;
+      if(frames < 220 && pieces.length) requestAnimationFrame(anim);
+      else ctx.clearRect(0,0,canvas.width,canvas.height);
+    })();
+  }
+  document.getElementById("celebrateBtn").addEventListener("click", celebrate);
+
+  // Cake
+  const flames = document.getElementById("flames");
+  const blowBtn = document.getElementById("blowBtn");
+  const relightBtn = document.getElementById("relightBtn");
+  const wishResult = document.getElementById("wishResult");
+  blowBtn.addEventListener("click", ()=>{
+    flames.classList.add("out");
+    wishResult.textContent = "✨ Your wish is sealed! May it all come true, Roshni! ✨";
+    blowBtn.classList.add("hidden"); relightBtn.classList.remove("hidden");
+    celebrate();
+  });
+  relightBtn.addEventListener("click", ()=>{
+    flames.classList.remove("out");
+    wishResult.textContent = "";
+    relightBtn.classList.add("hidden"); blowBtn.classList.remove("hidden");
+  });
+</script>
+</body>
+</html>
