@@ -271,6 +271,7 @@
   function playPop(){ tone(500, 0.12, "sine", 0.15, 0, 950); }
   function playChime(){ tone(523, 0.25, "sine", 0.12, 0); tone(659, 0.25, "sine", 0.12, 0.09); tone(784, 0.35, "sine", 0.12, 0.18); }
   function playError(){ tone(180, 0.20, "sawtooth", 0.07, 0, 120); }
+  function playExcited(){ tone(523, 0.15, "triangle", 0.14, 0); tone(659, 0.15, "triangle", 0.14, 0.07); tone(784, 0.15, "triangle", 0.14, 0.14); tone(1047, 0.30, "triangle", 0.14, 0.21); tone(1568, 0.20, "sine", 0.06, 0.28); }
   function playGift(){ playPop(); tone(1250, 0.20, "sine", 0.08, 0.05); }
   function renderDots(){
     dots.forEach((d,i)=>{
@@ -317,7 +318,7 @@
     window.scrollTo(0,0);
   });
   document.getElementById("danceContinueBtn").addEventListener("click", ()=>{
-    playPop();
+    playExcited();
     document.getElementById("danceTransition").classList.add("hidden");
     document.getElementById("excited").classList.remove("hidden");
     window.scrollTo(0,0);
