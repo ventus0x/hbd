@@ -36,7 +36,8 @@
   .prompt-screen p{color:#475569;font-size:1.1rem}
   .prompt-screen .big{font-size:80px}
   .btn-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:18px}
-  .btn-yes{background:#ef4444;color:#fff;border:0;padding:14px 30px;border-radius:999px;font-size:18px;font-weight:800;cursor:pointer;transition:transform .25s ease}
+  .btn-yes{background:#ef4444;color:#fff;border:0;padding:14px 30px;border-radius:999px;font-size:18px;font-weight:800;cursor:pointer;transition:font-size .25s ease,padding .25s ease}
+  #noMsg{position:relative;z-index:2}
   .btn-no{background:#fff;color:#ef4444;border:2px solid #ef4444;padding:14px 30px;border-radius:999px;font-size:18px;font-weight:800;cursor:pointer}
   #noMsg{min-height:22px;color:#be185d;font-weight:600;margin-top:12px}
   .gifts{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:24px}
@@ -259,7 +260,9 @@
   document.getElementById("noIntro").addEventListener("click", ()=>{
     document.getElementById("noMsg").textContent = "Nice try! That button is a bit shy — try YES ❤️";
     yesScale *= 2;
-    document.getElementById("yesIntro").style.transform = "scale(" + yesScale + ")";
+    const yesBtn = document.getElementById("yesIntro");
+    yesBtn.style.fontSize = (18 * yesScale) + "px";
+    yesBtn.style.padding = (14 * yesScale) + "px " + (30 * yesScale) + "px";
   });
   document.querySelectorAll(".excited-yes").forEach(b=>b.addEventListener("click", ()=>{
     document.getElementById("excited").classList.add("hidden");
