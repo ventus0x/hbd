@@ -242,6 +242,36 @@
   const lockMsg = document.getElementById("lockMsg");
   const lockCard = document.getElementById("lockCard");
 
+
+  // Built-in synthesized sound effects (no audio files, no background music).
+  // AudioContext is created only on a user tap, so nothing plays on its own.
+  let audioCtx = null;
+  function getAudio(){
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function tone(freq, dur, type, vol, delay, endFreq){
+    try{
+      const ctx = getAudio();
+      const t = ctx.currentTime + (delay || 0);
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = type || "sine";
+      osc.frequency.setValueAtTime(freq, t);
+      if(endFreq) osc.frequency.exponentialRampToValueAtTime(endFreq, t + dur);
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(vol || 0.12, t + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(t); osc.stop(t + dur + 0.05);
+    }catch(e){}
+  }
+  function playClick(){ tone(700, 0.07, "triangle", 0.10); }
+  function playPop(){ tone(500, 0.12, "sine", 0.15, 0, 950); }
+  function playChime(){ tone(523, 0.25, "sine", 0.12, 0); tone(659, 0.25, "sine", 0.12, 0.09); tone(784, 0.35, "sine", 0.12, 0.18); }
+  function playError(){ tone(180, 0.20, "sawtooth", 0.07, 0, 120); }
+  function playGift(){ playPop(); tone(1250, 0.20, "sine", 0.08, 0.05); }
   function renderDots(){
     dots.forEach((d,i)=>{
       d.textContent = i < entered.length ? "•" : "";
@@ -249,6 +279,7 @@
     });
   }
   function wrong(){
+    playError();
     lockMsg.textContent = "Hmm, that's not it. Try again!";
     lockCard.classList.remove("shake"); void lockCard.offsetWidth; lockCard.classList.add("shake");
     entered = ""; renderDots();
@@ -259,6 +290,7 @@
       document.getElementById("lock").classList.add("hidden");
       document.getElementById("danceTransition").classList.remove("hidden");
       window.scrollTo(0,0);
+      playChime();
       celebrate();
     } else {
       wrong();
@@ -272,17 +304,20 @@
   document.getElementById("keypad").addEventListener("click", (e)=>{
     const btn = e.target.closest("button");
     if(!btn) return;
+    playClick();
     if(btn.dataset.digit) addDigit(btn.dataset.digit);
     if(btn.id === "del") { entered = entered.slice(0,-1); renderDots(); }
     if(btn.id === "heart") check();
   });
   // Intro / excited / gifts flow
   document.getElementById("yesIntro").addEventListener("click", ()=>{
+    playPop();
     document.getElementById("intro").classList.add("hidden");
     document.getElementById("lock").classList.remove("hidden");
     window.scrollTo(0,0);
   });
   document.getElementById("danceContinueBtn").addEventListener("click", ()=>{
+    playPop();
     document.getElementById("danceTransition").classList.add("hidden");
     document.getElementById("excited").classList.remove("hidden");
     window.scrollTo(0,0);
@@ -290,6 +325,7 @@
   });
   let yesScale = 1;
   document.getElementById("noIntro").addEventListener("click", ()=>{
+    tone(300, 0.12, "sine", 0.12, 0, 200);
     document.getElementById("noMsg").textContent = "Nice try! That button is a bit shy — try YES ❤️";
     yesScale *= 2;
     const yesBtn = document.getElementById("yesIntro");
@@ -297,6 +333,7 @@
     yesBtn.style.padding = (14 * yesScale) + "px " + (30 * yesScale) + "px";
   });
   document.querySelectorAll(".excited-yes").forEach(b=>b.addEventListener("click", ()=>{
+    playPop();
     document.getElementById("excited").classList.add("hidden");
     document.getElementById("gifts").classList.remove("hidden");
     window.scrollTo(0,0);
@@ -306,6 +343,7 @@
     if(b.classList.contains("opened")) return;
     b.classList.add("opened");
     b.innerHTML = b.dataset.gift;
+    playGift();
     celebrate();
     openedGifts++;
     if(openedGifts === 3){
@@ -314,6 +352,7 @@
     }
   }));
   document.getElementById("seeSurpriseBtn").addEventListener("click", ()=>{
+    playChime();
     document.getElementById("gifts").classList.add("hidden");
     document.getElementById("birthday").classList.remove("hidden");
     window.scrollTo(0,0);
@@ -329,6 +368,7 @@
 
 
   document.querySelectorAll(".photo-card img").forEach(img=>img.addEventListener("click", ()=>{
+    playClick();
     document.getElementById("lightboxImg").src = img.src;
     document.getElementById("lightbox").classList.remove("hidden");
   }));
@@ -357,7 +397,7 @@
       else ctx.clearRect(0,0,canvas.width,canvas.height);
     })();
   }
-  document.getElementById("celebrateBtn").addEventListener("click", celebrate);
+  document.getElementById("celebrateBtn").addEventListener("click", ()=>{ playChime(); celebrate(); });
 
   // Cake
   const flames = document.getElementById("flames");
@@ -365,12 +405,14 @@
   const relightBtn = document.getElementById("relightBtn");
   const wishResult = document.getElementById("wishResult");
   blowBtn.addEventListener("click", ()=>{
+    playChime();
     flames.classList.add("out");
     wishResult.textContent = "✨ Your wish is sealed! May it all come true, babe 💖! ✨";
     blowBtn.classList.add("hidden"); relightBtn.classList.remove("hidden");
     celebrate();
   });
   relightBtn.addEventListener("click", ()=>{
+    playClick();
     flames.classList.remove("out");
     wishResult.textContent = "";
     relightBtn.classList.add("hidden"); blowBtn.classList.remove("hidden");
