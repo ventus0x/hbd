@@ -44,6 +44,14 @@
   .gift{transition:transform .25s ease}
   .gift.opened{background:#fff;color:#db2777;font-size:36px;animation:pop .45s ease}
   @keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+  .bubu{display:flex;align-items:center;justify-content:center;gap:2px;font-size:40px;line-height:1}
+  .bubu .b1{display:inline-block;animation:hugL 1s ease-in-out infinite alternate}
+  .bubu .b2{display:inline-block;animation:hugR 1s ease-in-out infinite alternate}
+  .bubu .h{display:inline-block;font-size:22px;animation:heartBeat 1s ease-in-out infinite}
+  @keyframes hugL{from{transform:translateX(5px) rotate(-6deg)}to{transform:translateX(-3px) rotate(6deg)}}
+  @keyframes hugR{from{transform:translateX(-5px) rotate(6deg)}to{transform:translateX(3px) rotate(-6deg)}}
+  @keyframes heartBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.45)}}
+  .gift.opened{height:175px}
   #giftSecret{margin-top:22px;font-size:1.4rem;font-weight:800;color:#be185d}
   .gift small{display:block;font-size:14px;color:#475569;margin-top:6px}
   /* Birthday */
@@ -137,9 +145,9 @@
   <div class="big">🎁</div>
   <h1>Tap on the mystery box to unlock your gifts!</h1>
   <div class="gifts">
-    <button class="gift" data-gift="💝<small>A big hug, whenever you need it</small>">🎁</button>
-    <button class="gift" data-gift="🌹<small>A promise to always be there</small>">🎁</button>
-    <button class="gift" data-gift="✨<small>All my love, today and always</small>">🎁</button>
+    <button class="gift" data-gift="<span class='bubu'><span class='b1'>🐻</span><span class='h'>❤️</span><span class='b2'>🐻‍❄️</span></span><small>A big hug, whenever you need it</small>">🎁</button>
+    <button class="gift" data-gift="<span class='bubu'><span class='b1'>🐻</span><span class='h'>❤️</span><span class='b2'>🐻‍❄️</span></span><small>A promise to always be there</small>">🎁</button>
+    <button class="gift" data-gift="<span class='bubu'><span class='b1'>🐻</span><span class='h'>❤️</span><span class='b2'>🐻‍❄️</span></span><small>All my love, today and always</small>">🎁</button>
   </div>
   <div id="giftSecret" class="hidden">You unlocked a secret: I ❤️ U</div>
   <button class="primary hidden" id="seeSurpriseBtn" style="margin-top:26px">See your surprise 🎉</button>
