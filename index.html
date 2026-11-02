@@ -141,6 +141,7 @@
   <img class="dance-gif" src="https://media1.tenor.com/m/VqYxwdS_nhEAAAAd/dudu-bubu-dancing-dudu.gif" alt="Dudu dancing">
   <h2>Yeshh you opened it 🥹</h2>
   <p>Get ready, babe 💖!</p>
+  <button class="primary" id="danceContinueBtn" style="margin-top:22px">Continue 💖</button>
 </section>
 
 <section id="excited" class="prompt-screen hidden">
@@ -246,11 +247,6 @@
       document.getElementById("danceTransition").classList.remove("hidden");
       window.scrollTo(0,0);
       celebrate();
-      setTimeout(()=>{
-        document.getElementById("danceTransition").classList.add("hidden");
-        document.getElementById("excited").classList.remove("hidden");
-        window.scrollTo(0,0);
-      }, 2500);
     } else {
       wrong();
     }
@@ -271,6 +267,11 @@
   document.getElementById("yesIntro").addEventListener("click", ()=>{
     document.getElementById("intro").classList.add("hidden");
     document.getElementById("lock").classList.remove("hidden");
+    window.scrollTo(0,0);
+  });
+  document.getElementById("danceContinueBtn").addEventListener("click", ()=>{
+    document.getElementById("danceTransition").classList.add("hidden");
+    document.getElementById("excited").classList.remove("hidden");
     window.scrollTo(0,0);
   });
   let yesScale = 1;
