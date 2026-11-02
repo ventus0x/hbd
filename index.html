@@ -83,6 +83,18 @@
   .dance-gif{width:240px;height:240px;object-fit:cover;border-radius:24px;border:6px solid #fff;box-shadow:0 20px 50px rgba(0,0,0,.5)}
   #danceTransition h2{font-size:2rem;margin:18px 0 6px;text-shadow:0 2px 12px rgba(0,0,0,.5)}
   #danceTransition p{color:#fde68a;font-weight:700;margin:0}
+  #excited{position:relative;overflow:hidden}
+  #excited h1{animation:heartbeat 1.2s ease-in-out infinite}
+  @keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .excited-gif{width:200px;height:200px;object-fit:cover;border-radius:24px;border:5px solid #fff;box-shadow:0 15px 35px rgba(0,0,0,.2)}
+  .float-hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+  .float-hearts span{position:absolute;bottom:-50px;font-size:28px;animation:floatUp 6s linear infinite}
+  .float-hearts span:nth-child(1){left:10%}
+  .float-hearts span:nth-child(2){left:28%;animation-delay:1.5s}
+  .float-hearts span:nth-child(3){left:52%;animation-delay:.8s}
+  .float-hearts span:nth-child(4){left:72%;animation-delay:2.5s}
+  .float-hearts span:nth-child(5){left:88%;animation-delay:3.5s}
+  @keyframes floatUp{from{transform:translateY(0) rotate(0deg);opacity:1}to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
   .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
   .photo-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.08)}
   .photo-card img{width:100%;height:280px;object-fit:cover;display:block;cursor:pointer}
@@ -145,12 +157,13 @@
 </section>
 
 <section id="excited" class="prompt-screen hidden">
-  <div class="big">😊</div>
+  <div class="float-hearts" aria-hidden="true"><span>💖</span><span>🎈</span><span>💕</span><span>🎈</span><span>💖</span></div>
+  <img class="excited-gif" src="https://media1.tenor.com/m/G9owpGP34PIAAAAd/jumping-for-joy-jumping.gif" alt="Bubu Dudu jumping for joy">
   <h1>Are you really excited?</h1>
   <p>There's no going back now…</p>
   <div class="btn-row">
-    <button class="btn-yes excited-yes">YES ❤️</button>
-    <button class="btn-yes excited-yes">YES ❤️</button>
+    <button class="btn-yes excited-yes">YESSS! 😍</button>
+    <button class="btn-yes excited-yes">OBVIOUSLY YES! 💖</button>
   </div>
 </section>
 
@@ -273,6 +286,7 @@
     document.getElementById("danceTransition").classList.add("hidden");
     document.getElementById("excited").classList.remove("hidden");
     window.scrollTo(0,0);
+    celebrate();
   });
   let yesScale = 1;
   document.getElementById("noIntro").addEventListener("click", ()=>{
