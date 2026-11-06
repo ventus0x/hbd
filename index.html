@@ -66,23 +66,9 @@
   .section h2{text-align:center;color:#7c3aed}
   .cake-wrap{text-align:center;background:#fff;border-radius:24px;padding:32px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
 
-  .cake{width:220px;height:190px;margin:6px auto 0;position:relative}
-  .cake .plate{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:240px;height:18px;background:#fff;border-radius:50%;box-shadow:0 4px 10px rgba(0,0,0,.15)}
-  .cake .layer-bottom{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);width:200px;height:70px;background:linear-gradient(180deg,#7b4a2d,#5a341d);border-radius:12px}
-  .cake .layer-cream{position:absolute;left:50%;bottom:82px;transform:translateX(-50%);width:200px;height:16px;background:#f3e5c3;border-radius:8px}
-  .cake .layer-top{position:absolute;left:50%;bottom:96px;transform:translateX(-50%);width:150px;height:58px;background:linear-gradient(180deg,#4a2c17,#3a2110);border-radius:12px}
-  .cake .frosting{position:absolute;left:50%;bottom:138px;transform:translateX(-50%);width:150px;height:20px;background:#2e1a0c;border-radius:12px 12px 6px 6px}
-  .cake .sprinkle{position:absolute;width:8px;height:8px;border-radius:50%}
-  .cake .candle{position:absolute;bottom:154px;width:9px;height:30px;background:repeating-linear-gradient(180deg,#fff 0 6px,#ec4899 6px 12px);border-radius:4px}
-  .cake .candle .flame{position:absolute;left:50%;top:-16px;transform:translateX(-50%);font-size:15px;animation:flameFlick .25s ease-in-out infinite alternate}
-  @keyframes flameFlick{from{transform:translateX(-50%) scale(1)}to{transform:translateX(-50%) scale(1.25) rotate(-6deg)}}
-  .flames{animation:flameFlick2 .4s ease-in-out infinite alternate}
-  @keyframes flameFlick2{from{transform:scale(1)}to{transform:scale(1.06)}}
-  .flames.out{animation:none}
-  .cake.out .flame{opacity:.2;animation:none}
-  .cake-wrap.song-playing .cake{animation:cakeDance .5s ease-in-out infinite}
+  .bubu-cake-gif{width:280px;max-width:92%;border-radius:24px;border:5px solid #fff;box-shadow:0 15px 35px rgba(0,0,0,.2)}
+  .cake-wrap.song-playing .bubu-cake-gif{animation:cakeDance .5s ease-in-out infinite}
   @keyframes cakeDance{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}50%{transform:translateY(-14px) rotate(2deg) scale(1.04)}}
-  .cake-wrap.song-playing .flames{animation-duration:.18s}
   .flames{font-size:28px;letter-spacing:6px}
   .flames.out{opacity:.25}
   button.primary{background:#db2777;color:#fff;border:0;padding:13px 22px;border-radius:999px;font-size:16px;font-weight:700;cursor:pointer;margin-top:16px}
@@ -219,20 +205,7 @@
 
   <div class="section">
     <div class="cake-wrap">
-      <div class="flames" id="flames">🔥 🔥 🔥 🔥 🔥</div>
-      <div class="cake" id="cake">
-        <div class="plate"></div>
-        <div class="layer-bottom"></div>
-        <div class="layer-cream"></div>
-        <div class="layer-top"></div>
-        <div class="frosting"></div>
-        <div class="sprinkle" style="left:52px;bottom:112px;background:#f59e0b"></div>
-        <div class="sprinkle" style="left:104px;bottom:122px;background:#ec4899"></div>
-        <div class="sprinkle" style="left:158px;bottom:110px;background:#22c55e"></div>
-        <div class="candle" style="left:62px"><span class="flame">🔥</span></div>
-        <div class="candle" style="left:105px"><span class="flame">🔥</span></div>
-        <div class="candle" style="left:148px"><span class="flame">🔥</span></div>
-      </div>
+      <img class="bubu-cake-gif" id="cakeGif" src="https://media1.tenor.com/m/jhVNIStBHy0AAAAd/bubu-dudu-birthday.gif" alt="Bubu Dudu with a birthday cake and candle">
       <h2>Make a wish, babe 💖!</h2>
       <p>Close your eyes, think of something wonderful… then blow out the candles.</p>
       <button class="primary" id="blowBtn">Blow out the candles 🕯️</button>
@@ -462,22 +435,24 @@
   document.getElementById("celebrateBtn").addEventListener("click", ()=>{ playChime(); celebrate(); });
 
   // Cake
-  const flames = document.getElementById("flames");
+  const cakeGif = document.getElementById("cakeGif");
+  const CAKE_CANDLE_GIF = "https://media1.tenor.com/m/jhVNIStBHy0AAAAd/bubu-dudu-birthday.gif";
+  const CAKE_PARTY_GIF = "https://media1.tenor.com/m/MzqPdGXZWAAAAAAd/bubu-dudu-happy-birthday.gif";
   const blowBtn = document.getElementById("blowBtn");
   const relightBtn = document.getElementById("relightBtn");
   const wishResult = document.getElementById("wishResult");
   blowBtn.addEventListener("click", ()=>{
     playChime();
-    flames.classList.add("out");
-    document.getElementById("cake").classList.add("out");
+    cakeGif.src = CAKE_PARTY_GIF;
+    cakeGif.alt = "Bubu Dudu celebrating with a birthday cake";
     wishResult.textContent = "✨ Your wish is sealed! May it all come true, babe 💖! ✨";
     blowBtn.classList.add("hidden"); relightBtn.classList.remove("hidden");
     celebrate();
   });
   relightBtn.addEventListener("click", ()=>{
     playClick();
-    flames.classList.remove("out");
-    document.getElementById("cake").classList.remove("out");
+    cakeGif.src = CAKE_CANDLE_GIF;
+    cakeGif.alt = "Bubu Dudu with a birthday cake and candle";
     wishResult.textContent = "";
     relightBtn.classList.add("hidden"); blowBtn.classList.remove("hidden");
   });
